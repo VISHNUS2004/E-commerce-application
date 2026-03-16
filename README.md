@@ -1,107 +1,40 @@
-# E-commerce Backend (Node.js + Express)
+# E-commerce Backend (Microservices)
 
-Simple in-memory e-commerce backend built using Express.
+This setup uses separate services with an API gateway.
 
-## Features
+## Services
 
-- Category management (create, read, update, delete)
-- Product management (create, read, update, delete)
-- Order creation with stock validation
-- Input validation and meaningful HTTP status codes
+- Product Service: http://localhost:4001
+- Category Service: http://localhost:4002
+- Order Service: http://localhost:4003
+- API Gateway: http://localhost:3000
 
-## Tech Stack
+## Run
 
-- Node.js
-- Express 5
-
-## Project Structure
-
-- `server.js` - API server and in-memory data store
-- `package.json` - project metadata and scripts
-
-## Getting Started
-
-### 1. Install dependencies
+From workspace root:
 
 ```bash
-npm install
+node 12032026/server.js
 ```
 
-### 2. Start the server
+## Gateway Endpoints
 
-```bash
-npm start
-```
+- GET /products
+- GET /products/:id
+- POST /products
+- PUT /products/:id
+- DELETE /products/:id
+- GET /categories
+- GET /categories/:id
+- POST /categories
+- PUT /categories/:id
+- DELETE /categories/:id
+- GET /orders
+- POST /orders
 
-Server runs on:
+## Order Creation Rules
 
-- `http://localhost:3000`
-
-## API Overview
-
-### Health / Root
-
-- `GET /`
-
-Returns service message and list of available endpoints.
-
-### Categories
-
-- `GET /categories`
-- `POST /categories`
-- `PUT /categories/:id`
-- `DELETE /categories/:id`
-
-Create category payload:
-
-```json
-{
-  "name": "Wearables"
-}
-```
-
-### Products
-
-- `GET /products`
-- `POST /products`
-- `PUT /products/:id`
-- `DELETE /products/:id`
-
-Create product payload:
-
-```json
-{
-  "name": "Smart Watch",
-  "price": 3500,
-  "stock": 20,
-  "categoryId": 1
-}
-```
-
-### Orders
-
-- `GET /orders`
-- `POST /orders`
-
-Create order payload:
-
-```json
-{
-  "productId": 1,
-  "quantity": 2
-}
-```
-
-## Notes
-
-- Data is stored in memory. Restarting the server resets all categories, products, and orders.
-- Default seed data is available in `server.js`.
-
-## Scripts
-
-- `npm start` - start server
-- `npm test` - placeholder test script
-
-## Author
-
-Training project for backend practice.
+- Check whether product exists
+- Check whether enough stock is available
+- Reduce stock after order creation
+- Calculate total price automatically
